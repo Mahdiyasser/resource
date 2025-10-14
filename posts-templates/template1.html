@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post Title</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f8fbff;
+            /* white tone */
+            color: #1a1a1a;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 50px auto;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid #d9eafd;
+        }
+
+        h1 {
+            color: #0078d4;
+            /* baby blue */
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .bio {
+            font-style: italic;
+            color: #444;
+            margin-bottom: 25px;
+            border-left: 4px solid #0078d4;
+            padding-left: 12px;
+            background: #f0f7ff;
+            border-radius: 6px;
+        }
+
+        .content {
+            line-height: 1.8;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .content p {
+            margin-bottom: 18px;
+        }
+
+        .images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .images img {
+            width: 100%;
+            border-radius: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .images img:hover {
+            transform: scale(1.04);
+            opacity: 0.9;
+        }
+
+        /* === Video section === */
+        .videos {
+            margin-top: 35px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .videos iframe {
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 6px 20px rgba(0, 120, 212, 0.1);
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        a.back {
+            color: #0078d4;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        a.back:hover {
+            color: #005fa3;
+            text-decoration: underline;
+        }
+
+        /* ===== Fullscreen image popup ===== */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+
+        .popup.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .popup img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .popup span {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 2.2rem;
+            color: #fff;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            .videos iframe {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Launch Day</h1>
+        <div class="meta">
+            📅 <span id="date">October 11, 2025</span> |
+            🕓 <span id="time">04:25 PM</span> |
+            📍 <span id="location">Hosh Issa, Beheira, Egypt</span>
+        </div>
+
+        <div class="bio">
+            Our first rocket launch — and it was insane.
+        </div>
+
+        <div class="content">
+            <p>
+                Today marks the official launch of our first rocket. The whole team’s been working nonstop, and seeing
+                it finally lift off was unreal.
+            </p>
+            <p>
+                We learned a lot about pressure management, telemetry, and the flight computer’s stability system. This
+                is just the start — the "Space" project has a long journey ahead.
+            </p>
+        </div>
+
+        <!-- Images -->
+        <div class="images">
+            <img src="/projects/assets/Space/images/Launch-Day-image1.jpg" alt="image1">
+            <img src="/projects/assets/Space/images/Launch-Day-image2.jpg" alt="image2">
+        </div>
+
+        <!-- Videos -->
+        <div class="videos">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            <!-- add more <iframe> for more videos -->
+        </div>
+
+        <footer>
+            <a href="/projects/index.html" class="back">← Back to Projects</a>
+        </footer>
+    </div>
+
+    <!-- fullscreen image popup -->
+    <div class="popup" id="popup">
+        <span id="close">&times;</span>
+        <img src="" alt="popup image" id="popup-img">
+    </div>
+
+    <script>
+        const popup = document.getElementById('popup');
+        const popupImg = document.getElementById('popup-img');
+        const close = document.getElementById('close');
+
+        document.querySelectorAll('.images img').forEach(img => {
+            img.addEventListener('click', () => {
+                popup.classList.add('active');
+                popupImg.src = img.src;
+            });
+        });
+
+        close.addEventListener('click', () => popup.classList.remove('active'));
+        popup.addEventListener('click', e => {
+            if (e.target === popup) popup.classList.remove('active');
+        });
+    </script>
+</body>
+
+</html>
